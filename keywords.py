@@ -144,42 +144,16 @@ with st.sidebar:
             ]
 
 
-import streamlit as st
+    # Submit Button
+    submit_button = st.button("Generate")
 
-# Initialize session state variables if they do not exist
-if 'response' not in st.session_state:
-    st.session_state.response = None
-
-# Add the Clear all button
-clear_button = st.sidebar.button("Clear All")
-if clear_button:
-    st.session_state.clear()
-    st.experimental_rerun()  # This ensures the page is rerun to reflect the cleared state
-
-# Sidebar Submit Button
-submit_button = st.sidebar.button("Generate")
-
-if submit_button and 'response' in st.session_state and not clear_button:
+if submit_button:
     # Display the spinner
     with st.spinner("Generating...."):
         # Generate the response
         response = model.generate_content(prompt_parts)
-        # Store the response in session state
-        st.session_state.response = response.text
-
-# Write results if response is available
-if st.session_state.response:
-    st.write(st.session_state.response)
-
-    # Download file option
-    with open("keyword_analysis.txt", "w") as f:
-        f.write(st.session_state.response)
-    st.download_button(
-        label="Download File",
-        data=open("keyword_analysis.txt", "rb").read(),
-        file_name='keyword_analysis.txt',
-        mime='text/plain',
-    )
+        # Write results
+        st.write(response.text)
 
     # Add styling to the generated text
     st.markdown('''
@@ -208,6 +182,26 @@ if st.session_state.response:
             }
         </style>
     ''', unsafe_allow_html=True)
+
+clear_button = st.sidebar.button("Clear All")
+with st.sidebar:
+    st.markdown('''
+        <style>
+            .element-container .stButton.stBtn {
+                background-color: #ffc107 !important;
+                border-color: #ffc107 !important;
+            }
+        </style>
+    ''', unsafe_allow_html=True)
+
+    if clear_button:
+        for key in st.session_state:
+            if isinstance(st.session_state[key], str) and st.session_state[key] != "":
+                st.session_state[key] = ""
+            elif isinstance(st.session_state[key], list) and st.session_state[key] != []:
+                st.session_state[key] = []
+            elif isinstance(st.session_state[key], dict) and st.session_state[key] != {}:
+                st.session_state[key] = {}
 
 
 
