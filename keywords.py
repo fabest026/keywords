@@ -107,7 +107,7 @@ with st.sidebar:
     
     # Subpoints
     
-    country = st.text_input("Country")
+    country_options = ["United States", "Canada", "United Kingdom", "Australia", "Germany", "France", "India", "Pakistan", "Nigeria", "Brazil", "Russia", "China", "Japan", "South Korea", "South Africa", "Spain", "Italy", "Turkey", "Netherlands", "Belgium", "Sweden", "Switzerland", "New Zealand", "Singapore", "Malaysia"]
     
     # Add the Voice Tones
     #voice_tones = st.sidebar.selectbox("Choose Voice Tones:", ["Formal", "Informal", "Friendly", "Bold", "Adventurous", "Witty", "Professional", "Casual", "Informative", "Creative", "Trendy", "Caring", "Cheerful", "Excited", "Funny", "Sad", "Serious", "Tense", "Vulnerable", "Angry", "Surprised", "Worried", "Assertive", "Confident", "Cooperative", "Encouraging" ])
